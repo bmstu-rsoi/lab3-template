@@ -1127,6 +1127,15 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(() => {}, 30000);"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -1519,7 +1528,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"setTimeout(() => {}, 30000);"
 								],
 								"type": "text/javascript"
 							}

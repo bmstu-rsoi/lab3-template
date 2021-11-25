@@ -937,6 +937,15 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(() => {}, 30000);"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -1489,6 +1498,15 @@
 									"    const response = pm.response.json();",
 									"    pm.expect(response.message).to.be.eq(\"Loyalty Service unavailable\")",
 									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(() => {}, 30000);"
 								],
 								"type": "text/javascript"
 							}
