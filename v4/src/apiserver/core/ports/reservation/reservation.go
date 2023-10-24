@@ -3,8 +3,9 @@ package reservation
 import "context"
 
 type Config struct {
-	Host string
-	Port string
+	Host     string
+	Port     string
+	MaxFails uint64
 }
 
 type Client interface {
