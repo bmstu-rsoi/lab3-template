@@ -1,11 +1,17 @@
 package com.example.rentalservice.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.UUID;
 
 public class CarShortResponse {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private UUID carUid;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String brand;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String model;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String registrationNumber;
 
     public CarShortResponse() {

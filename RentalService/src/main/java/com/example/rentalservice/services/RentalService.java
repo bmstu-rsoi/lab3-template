@@ -7,6 +7,8 @@ import com.example.rentalservice.enums.RentalStatus;
 import com.example.rentalservice.exception.ResourceNotFoundException;
 import com.example.rentalservice.dto.request.RentalRequest;
 import com.example.rentalservice.repos.RentalRepository;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -52,10 +54,12 @@ public class RentalService {
         try {
             paymentResponse = getPayment(rental.getPaymentUid());
         } catch (Exception e) {
+            paymentResponse = new PaymentResponse();
         }
         try {
             carShortResponse = getCar(rental.getCarUid());
         } catch (Exception e) {
+            carShortResponse = new CarShortResponse();
         }
         return new GetRentalResponse(rental, paymentResponse, carShortResponse);
     }

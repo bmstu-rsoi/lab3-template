@@ -1,10 +1,15 @@
 package com.example.rentalservice.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.UUID;
 
 public class PaymentResponse {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private UUID paymentUid;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String status;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer price;
 
     public PaymentResponse(UUID paymentUid, String status, Integer price) {
