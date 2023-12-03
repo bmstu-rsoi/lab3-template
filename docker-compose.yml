@@ -58,7 +58,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/payments
       - SPRING_DATASOURCE_USERNAME=program
       - SPRING_DATASOURCE_PASSWORD=test
-      - SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS="kafka:9092"
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS=kafka:9092
 
   rental:
     image: antonidass/rsoi2-rental-service:latest
@@ -84,7 +84,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_KAFKA_PRODUCER_BOOTSTRAP-SERVERS="kafka:9092"
+      - SPRING_KAFKA_PRODUCER_BOOTSTRAP-SERVERS=kafka:9092
       - CAR=http://car:8070
       - PAYMENT=http://payment:8050
       - RENTAL=http://rental:8060
