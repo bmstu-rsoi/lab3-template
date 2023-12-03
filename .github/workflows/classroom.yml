@@ -59,12 +59,12 @@ jobs:
       - name: Run containers
         timeout-minutes: 10
         run: |
+          docker-compose up -d zookeeper
+          docker-compose up -d kafka
           docker-compose up -d car
           docker-compose up -d payment
           docker-compose up -d rental
           docker-compose up -d gw
-          docker-compose up -d zookeeper
-          docker-compose up -d kafka
           ./scripts/wait-script.sh
         env:
           WAIT_PORTS: 8080,8070,8060,8050
