@@ -8,7 +8,7 @@ on:
       - master
 jobs:
   build:
-       name: Autograding
+    name: Autograding
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -48,7 +48,6 @@ jobs:
         with:
           java-version: 1.15
 
-
       - name: Build image
         run: cd GatewayService && docker build -t gateway_service . --tag antonidass/rsoi2-gateway-service:latest
 
@@ -72,7 +71,6 @@ jobs:
           ./scripts/wait-script.sh
         env:
           WAIT_PORTS: 8080,8070,8060,8050
-
 
       - name: Run API Tests
         timeout-minutes: 5
