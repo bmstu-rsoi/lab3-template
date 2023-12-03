@@ -46,7 +46,18 @@ public class RentalService {
         Rental rental = rentalRepository
                 .findByRentalUidAndUsername(rentalUid, username)
                 .orElseThrow(() -> new ResourceNotFoundException("Object with " + rentalUid + " with username = " + username + " not founded"));
-        return new GetRentalResponse(rental, getPayment(rental.getPaymentUid()), getCar(rental.getCarUid()));
+
+        PaymentResponse paymentResponse = null;
+        CarShortResponse carShortResponse = null;
+        try {
+            paymentResponse = getPayment(rental.getPaymentUid());
+        } catch (Exception e) {
+        }
+        try {
+            carShortResponse = getCar(rental.getCarUid());
+        } catch (Exception e) {
+        }
+        return new GetRentalResponse(rental, paymentResponse, carShortResponse);
     }
     private CarShortResponse getCar(UUID carUid) throws URISyntaxException, IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
