@@ -14,8 +14,7 @@
     <name>GatewayService</name>
     <description>GatewayService</description>
     <properties>
-        <java.version>15</java.version>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
     <dependency>

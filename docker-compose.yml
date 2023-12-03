@@ -22,7 +22,7 @@ services:
   kafka:
     container_name: kafka
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
     image: wurstmeister/kafka
     ports:
@@ -58,8 +58,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/payments
       - SPRING_DATASOURCE_USERNAME=program
       - SPRING_DATASOURCE_PASSWORD=test
-      - SPRING_KAFKA_CONSUMER_BOOTSTRAP-SERVERS=kafka:9092
-
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka:9092
+    links:
+      - kafka:kafka
   rental:
     image: antonidass/rsoi2-rental-service:latest
     container_name: rental
@@ -88,6 +89,7 @@ services:
       - CAR=http://car:8070
       - PAYMENT=http://payment:8050
       - RENTAL=http://rental:8060
-
+    links:
+      - kafka:kafka
 volumes:
   db-data:
