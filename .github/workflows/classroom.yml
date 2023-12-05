@@ -17,45 +17,66 @@ jobs:
 
       - uses: docker/setup-buildx-action@v2
 
-      # TODO build and run unit tests
+      - name: set up JDK 21
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.21
 
-      - name: Build images
-        timeout-minutes: 10
-        run: docker compose build
+      - name: Gradle Build car
+        run: cd CarsService && ./gradlew build --exclude-task test
+
+      - name: Gradle Build payment
+        run: cd PaymentService && ./gradlew build --exclude-task test
+
+      - name: Gradle Build rental
+        run: cd RentalService && ./gradlew build --exclude-task test
+
+      - name: Maven Build gateway
+        run: cd GatewayService && mvn -B clean package -DskipTests
+
+      - name: Build image
+        run: cd CarsService && docker build -t car_service . --tag antonidass/rsoi2-car-service:latest
+
+      - name: Build image
+        run: cd PaymentService && docker build -t payment_service . --tag antonidass/rsoi2-payment-service:latest
+
+      - name: Build image
+        run: cd RentalService && docker build -t rental_service . --tag antonidass/rsoi2-rental-service:latest
+
+      - name: Build image
+        run: cd GatewayService && docker build -t gateway_service . --tag antonidass/rsoi2-gateway-service:latest
+
+      - name: Setup db
+        run: |
+          docker-compose up -d postgres
+          docker-compose logs postgres
+          sleep 5
+          cd postgres
+          chmod +x ./30-init-db.sh
+          ./30-init-db.sh
+          cd ..
 
       - name: Run containers
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
-          docker compose up -d
+          docker-compose up -d zookeeper
+          docker-compose up -d kafka
+          docker-compose up -d car
+          docker-compose up -d payment
+          docker-compose up -d rental
+          docker-compose up -d gw
           ./scripts/wait-script.sh
         env:
           WAIT_PORTS: 8080,8070,8060,8050
-
-      # TODO setup variant, service and port
 
       - name: Run API Tests
         timeout-minutes: 5
         run: ./scripts/test-script.sh
         env:
-          VARIANT: <variant>
-          SERVICE_NAME: <your service name>
-          PORT_NUMBER: <port number>
+          VARIANT: v3
+          SERVICE_NAME: payment
+          PORT_NUMBER: 8050
 
       - uses: education/autograding@v1
         id: autograder
         continue-on-error: true
-
-      - name: Github auto grader mark
-        uses: Romanow/google-sheet-autograder-marker@v1.0
-        with:
-          google_token: ${{secrets.GOOGLE_API_KEY}}
-          sheet_id: "1xkgjUX6Qmk7rdJG-QPOToav-HWWtthJjnShIKnw3oIY"
-          homework_number: 3
-          user_column: 'D'
-          column_offset: 'F'
-          mark: "'+"
-
-      - name: Stop containers
-        if: always()
-        continue-on-error: true
-        run: docker compose down -v

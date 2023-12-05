@@ -1,0 +1,77 @@
+server:
+  port: 8080
+
+#spring:
+#  application:
+#    name: GATEWAY_SERVICE
+#  cloud:
+#    gateway:
+#      routes:
+##        - id: car
+##          uri: http://car:8070
+##          predicates:
+##            - Path=/api/v1/cars/**
+##          filters:
+##            - AddResponseHeader=X-Powered-By,Gateway Service
+##        - id: rental
+##          uri: http://rental:8060
+##          predicates:
+##            - Path=/api/v1/rental/**
+##          filters:
+##            - AddResponseHeader=X-Powered-By,Gateway Service
+##        - id: payment
+##          uri: http://payment:8050
+##          predicates:
+##            - Path=/api/v1/payment/**
+##          filters:
+##            - AddResponseHeader=X-PowereRd-By,Gateway Service
+#        - id: car
+#          uri: http://localhost:8070
+#          predicates:
+#            - Path=/api/v1/cars/**
+#          filters:
+#            - AddResponseHeader=X-Powered-By,Gateway Service
+#        - id: rental
+#          uri: http://localhost:8060
+#          predicates:
+#            - Path=/api/v1/rental/**
+#          filters:
+#            - AddResponseHeader=X-Powered-By,Gateway Service
+#        - id: payment
+#          uri: http://localhost:8050
+#          predicates:
+#            - Path=/api/v1/payment/**
+#          filters:
+#            - AddResponseHeader=X-PowereRd-By,Gateway Service
+
+#spring:
+#  application:
+#    name: ${APPLICATION_NAME:gateway}
+#  rabbitmq:
+#    host: rabbitmq
+#    port: 5672
+#    rental-routingKey: routingKey
+#    exchange: exchange
+#    rental-queue: queue-car
+#    exchangeType: direct
+#    autoCreate: true
+#    virtual-host: /
+#    username: guest
+#    password: guest
+#  kafka:
+#    producer:
+#      bootstrap-servers: "localhost:9092"
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: "localhost:9092"
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    bootstrap-servers: kafka:9092
+
+#  msg.topic=msg-topic
+#  json.topic=json.topic
+#  kafka.server=kafka:9092
+#  key=org.apache.kafka.common.serialization.StringSerializer
+#  msgValue=org.apache.kafka.common.serialization.StringSerializer
